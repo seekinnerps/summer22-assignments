@@ -1,1 +1,74 @@
 
+1.	(a) Describe example use cases of smart contracts mentioned in the lecture.
+	Token systems
+Tokens work as a sub-currency of Ethereum and represent a certain asset such as a stock. For example, the renowned Non-fungible tokens (NFT) powered by smart contracts on the Ethereum blockchain can represent anything unique as an Ethereum-based asset. NFTs are giving more power to content creators and can better protect their copyright. A typical example can be auction NFT-based works of art.
+	Identity and reputation systems
+Smart contracts can also be used as a decentralized identity management system like uPort, which is a secure mobile self-sovereign identity wallet that gives complete control over your identity and personal data.
+Individual identity contains reputation, data, and digital assets. The digital identity, if used rightly, can bring new opportunities to the person. Also, digital identity can also help counterparties learn about the individual without knowing their true identities or verify transactions, protecting each individual’s identity from counterparties and enable him to share it with companies that he intends. 
+	Decentralized Autonomous Organization (DAO)
+A decentralized autonomous organization (DAO) has no central governing body, every member within a DAO typically shares a common goal and attempt to act in the best interest of the entity. DAs are basically a generalization of multi-signature wallets. The members vote to trigger certain methods to make decisions in a bottoms-up management approach.
+	Election and voting systems
+The blockchain provides a tamper-proof data structure for storing votes. A smart contract can ensure that a specific wallet can only vote once.
+
+(b) There are many use cases for smart contracts. Think of three more and explain them.
+	Smart contracts can help in international goods transfer and trade payment initiations with the use of a Letter of Credit. Using smart contracts will improve the liquidity of the financial assets, in return, improving the suppliers, buyers, and institutions’ financial efficiencies.
+	Supply chain management is also a great, blockchain smart contract use case. For example, it can be used to track items within the supply chain with full visibility and transparency. A business can use smart-contract-powered supply chains and improve its inventory tracking to a granular level.
+	Smart contracts can also help improve financial services like mortgages and loans. For instance, the smart contract set up to handle a mortgage can manage it by tracking the payments and releasing the property when the whole loan is paid off, which is visible to all the involved parties. To do so, it can connect the parties and ensure that the whole process can be completed in a friction-less and error-free process.
+
+(c) Find concrete addresses of contracts for five of the use cases you identified above on the Ethereum mainnet. Explain briefly why a contract falls into a specific category.
+	Token
+ 
+	Identity
+ 
+	DAO
+ 
+	Supply chain
+ 
+	DeFi
+ 
+
+The address for an Ethereum smart contract is deterministically computed from the address of its creator (sender) and how many transactions the creator has sent (nonce). The sender and nonce are RLP encoded and then hashed with Keccak-256.
+
+2.	(a) What is gas in the context of Ethereum?
+Gas refers to the unit that measures the amount of computational effort required to execute specific operations (conduct a transaction) successfully on the Ethereum network.
+The amount of gas depends on the amount and speed of the execution of the transaction.
+(b) What happens with spare gas if too much gas was provided for a transaction?
+The extra gas will be returned(refund) to its provider.
+(c) Rank the following EVM instructions by their gas cost. Note: the CREATE instruction creates a new smart contract.
+SHA3--30
+PUSH4 0x00000000--3
+SELFDESTRUCT (if no new account is created)-- negative gas 5000
+JUMP--8
+CREATE--32000
+CALL--100
+PUSH1 Oxff--1
+STOP--0
+STOP<PUSH1<PUSH4<JUMP<SHA3<CALL<SELFDESTRUCT<CREATE
+
+3.	In contrast to the transaction based ledger of Bitcoin, Ethereum uses an account based ledger to maintain the world state. In Bitcoin double spend attacks are prevented by unspent transaction outputs (UTXOs): Once a UTXO is spent, it cannot be spent again which creates a chain of coin ownership. How does Ethereum prevent double spends?
+If two transactions are created with the same coin, miners will eventually pick one of them that makes them most money. So a trick avoided by nonce is using higher gas prices to get a transaction sent later be mined before an earlier one from the same account.
+For instance, in a situation where A sends a transaction of X ETH to B as a payment and A's account has only that X ETH in his account. Once the transaction was sent to be mined A can send another transaction of X ETH with a higher gas price to one of his other account letting the first transaction sent to be mined later by getting a higher priority in the pending transaction queue. But since Ethereum takes nonce into consideration this is not allowed as the nonce of the later transaction is higher than the previous one.
+
+4. In Ethereum there are two types of transactions. Whenever a wallet calls a method on a contract, a transaction is sent. Whenever a contract calls a method on another contract, a virtual message is sent (sometimes referred as internal transactions). Messages exist "virtually" and are not written to the blockchain. 
+Why are messages not published to blockchain? How could the blockchain be in the same state among all nodes without writing messages to the blockchain? 
+Ethereum supports two types of accounts
+1. Accounts that are controlled by private keys and owned externally
+Accounts that are controlled by a private key do not have any code stored on the blockchain.
+This type can be seen as the default wallet of a user. It can sign transactions, issue smart contract functions calls and send Ether from one account to another.
+The origin of any transaction is always an account controlled by a private key.
+2. Smart Contract accounts which are controlled by their code
+Smart Contracts are treated as account entities with their own, unique address.
+Contracts can send messages to other accounts, both externally controlled and smart contracts.
+They can't issue a transaction themselves.
+They have a persistent internal storage to write and read data from.
+
+5. (a) Name four reasons why a transaction that is sent to the Ethereum network might not get mined.
+there are enough other transactions on the network willing to pay a higher fee to the miners to get processed.
+A supplied gas price is not high enough for a miner to want to accept it. 
+The spam transactions are so big that they would strain the miners' network connections too much for the amount of relaying fees the miners would get
+……
+(b) Name two different ways how a mined transaction can fail.
+The first way a transaction can fail is when the user inserts a gas limit that is not sufficient enough to pay for the transaction fee. As a result, the status of the transaction will be considered as a “Transaction failed” and the Ether used during the process will not be refunded.
+The second way a transaction can fail is when a contract rejects the user’s transaction. Many smart contracts have “special exceptions” and “require rules”, such as “OwnerOnly.” Even though the transaction will be reverted, the Ether used during the process will not be refunded.
+(c) Why does a mined transaction that fails still cost gas?
+In both cases, the Ether will not be refunded because even though the transaction failed, miners are mining for the transactions, putting them into blocks, and securing the blockchain. To reward them, they will still receive the transaction fee.
