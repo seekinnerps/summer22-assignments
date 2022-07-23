@@ -26,7 +26,6 @@ The blockchain provides a tamper-proof data structure for storing votes. A smart
  
 	DeFi
  
-
 The address for an Ethereum smart contract is deterministically computed from the address of its creator (sender) and how many transactions the creator has sent (nonce). The sender and nonce are RLP encoded and then hashed with Keccak-256.
 
 2.	(a) What is gas in the context of Ethereum?
